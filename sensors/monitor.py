@@ -21,8 +21,7 @@ class HelloSensor(Sensor):
 
          return credentials
 
-    def run(self):
-        while not self._stop:
+    def run(self):        
             SUBSCRIPTION_ID = '2f50f202-0a84-4c8c-a929-fcc5a3174590'
             GROUP_NAME = 'OmkarVmPlzDoNotRemove'
             LOCATION = 'West US'
@@ -37,29 +36,30 @@ class HelloSensor(Sensor):
             client = MonitorManagementClient(
                  credentials,
                  SUBSCRIPTION_ID
-                 )        
-            m=[]
-            today = datetime.datetime.now()-timedelta(hours=6)
-            yesterday = today - datetime.timedelta(minutes=5)
-            metrics_data = client.metrics.list(
-                           resource_id,
-                          timespan="{}/{}".format(yesterday, today),
-                          interval='PT1M',
-                          metricnames='Percentage CPU',
-                          aggregation='Maximum'
-                          )
-            for item in metrics_data.value:
-              for timeserie in item.timeseries:
-                for data in timeserie.data:
-                   x=data.maximum
-                   m.append(x)
-            sum=0
-            for m1 in m:
-              sum=sum+m1
-            avg=sum/5              
-            payload = {'average': avg}
-            self.sensor_service.dispatch(trigger='hello_st2.event1', payload=payload)         
-            eventlet.sleep(60)
+                 )
+            while not self._stop:
+                m=[]
+                today = datetime.datetime.now()-timedelta(hours=6)
+                yesterday = today - datetime.timedelta(minutes=5)
+                metrics_data = client.metrics.list(
+                               resource_id,
+                              timespan="{}/{}".format(yesterday, today),
+                              interval='PT1M',
+                              metricnames='Percentage CPU',
+                              aggregation='Maximum'
+                              )
+                for item in metrics_data.value:
+                  for timeserie in item.timeseries:
+                    for data in timeserie.data:
+                       x=data.maximum
+                       m.append(x)
+                sum=0
+                for m1 in m:
+                  sum=sum+m1
+                avg=sum/5              
+                payload = {'average': avg}
+                self.sensor_service.dispatch(trigger='hello_st2.event1', payload=payload)         
+                eventlet.sleep(60)
 
     def cleanup(self):
         self._stop = True
