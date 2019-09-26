@@ -17,15 +17,6 @@ class HelloSensor(Sensor):
     def setup(self):
         pass
     
-    def get_credentials():
-        credentials = ServicePrincipalCredentials(
-                        client_id = '94c1d9ea-ffd1-4340-8f19-d3ad284805d8',
-                        secret = 'uJUcbJbJjN3Y3TXYRR*6lUVuV/Z0Av@]',
-                        tenant = 'd5656af4-b7b3-45b9-9346-fb0547921fb7'
-                        )
-
-        return credentials
-
     def run(self):
         credentials = get_credentials()
         SUBSCRIPTION_ID = '2f50f202-0a84-4c8c-a929-fcc5a3174590'
@@ -78,3 +69,11 @@ class HelloSensor(Sensor):
 
     def remove_trigger(self, trigger):
         pass
+    
+    def get_credentials(self):
+        credentials = ServicePrincipalCredentials(
+                        client_id = '94c1d9ea-ffd1-4340-8f19-d3ad284805d8',
+                        secret = 'uJUcbJbJjN3Y3TXYRR*6lUVuV/Z0Av@]',
+                        tenant = 'd5656af4-b7b3-45b9-9346-fb0547921fb7'
+                        )
+        return credentials
