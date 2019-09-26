@@ -11,6 +11,7 @@ class HelloSensor(Sensor):
 
     def setup(self):
         pass
+    
     def get_credentials():
         credentials = ServicePrincipalCredentials(
                     client_id = '94c1d9ea-ffd1-4340-8f19-d3ad284805d8',
@@ -30,6 +31,7 @@ class HelloSensor(Sensor):
               "resourceGroups/{}/"
               "providers/Microsoft.Compute/virtualMachines/{}"
                ).format(SUBSCRIPTION_ID, GROUP_NAME, VM_NAME)
+            
             credentials = get_credentials()
             client = MonitorManagementClient(
                  credentials,
