@@ -42,29 +42,29 @@ class HelloSensor(Sensor):
                  credentials,
                  SUBSCRIPTION_ID
                  )
-            while not self._stop:
-                m=[]
-                today = datetime.datetime.now()-timedelta(hours=6)
-                yesterday = today - datetime.timedelta(minutes=5)
-                metrics_data = client.metrics.list(
+            
+            m=[]
+            today = datetime.datetime.now()-timedelta(hours=6)
+            yesterday = today - datetime.timedelta(minutes=5)
+            metrics_data = client.metrics.list(
                                resource_id,
                               timespan="{}/{}".format(yesterday, today),
                               interval='PT1M',
                               metricnames='Percentage CPU',
                               aggregation='Maximum'
                               )
-                for item in metrics_data.value:
-                  for timeserie in item.timeseries:
-                    for data in timeserie.data:
+            for item in metrics_data.value:
+               for timeserie in item.timeseries:
+                  for data in timeserie.data:
                        x=data.maximum
                        m.append(x)
-                sum=0
-                for m1 in m:
-                  sum=sum+m1
-                avg=sum/5              
-                payload = {'average': avg}
-                self.sensor_service.dispatch(trigger='hello_st2.event1', payload=payload)         
-                eventlet.sleep(60)
+            sum=0
+            for m1 in m:
+              sum=sum+m1
+            avg=sum/5              
+            payload = {'average': avg}
+            self.sensor_service.dispatch(trigger='hello_st2.event1', payload=payload)         
+            
 
     def cleanup(self):
         self._stop = True
