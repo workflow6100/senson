@@ -27,6 +27,7 @@ class HelloSensor(Sensor):
          return credentials
 
     def run(self):        
+            credentials = get_credentials()
             SUBSCRIPTION_ID = '2f50f202-0a84-4c8c-a929-fcc5a3174590'
             GROUP_NAME = 'OmkarVmPlzDoNotRemove'
             LOCATION = 'West US'
@@ -35,9 +36,8 @@ class HelloSensor(Sensor):
               "subscriptions/{}/"
               "resourceGroups/{}/"
               "providers/Microsoft.Compute/virtualMachines/{}"
-               ).format(SUBSCRIPTION_ID, GROUP_NAME, VM_NAME)
-            
-            credentials = get_credentials()
+               ).format(SUBSCRIPTION_ID, GROUP_NAME, VM_NAME)            
+       
             client = MonitorManagementClient(
                  credentials,
                  SUBSCRIPTION_ID
