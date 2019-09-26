@@ -1,6 +1,6 @@
 ---
 class_name: "HelloSensor"
-entry_point: "sensor1.py"
+entry_point: "monitor.py"
 description: "Test sensor that emits triggers."
 trigger_types:
   -
